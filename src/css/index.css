@@ -1,0 +1,7 @@
+body {
+    background-color: yellow;
+}
+
+.imagePic {
+    background: url('../logo.png');
+}

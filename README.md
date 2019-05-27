@@ -31,6 +31,7 @@ webpack learn
 11 环境打包变量
     cross-env NODE_ENV='development' 可以定义环境变量， 获取的时候用process.env.NODE_ENV
     webpack.DefinePlugin({ DEV: '"development"'}) 可以通过DEV获取
+12
 
 
 

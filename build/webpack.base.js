@@ -145,7 +145,7 @@ const path = require('path')
 const getPath = (dir) => path.join(__dirname, '..', dir)
 // const CleanWebpackPlugin = require('clean-webpack-plugin') // 清除目录
 // const HtmlWebpackPlugin = require('html-webpack-plugin') // html模板
-const CssExtractPlugin = require('mini-css-extract-plugin') // css提取
+// const CssExtractPlugin = require('mini-css-extract-plugin') // css提取
 // const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 // const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const HtmlWithImgLoader = require('html-withimg-loader')
@@ -153,11 +153,28 @@ const CssExtractPlugin = require('mini-css-extract-plugin') // css提取
 const env = process.env.NODE_ENV
 // console.log('当前的NODE_ENV', process.env.NODE_ENV)
 const config = require('../config/index.js')
+
+const createEslintRule = () => {
+  return {
+    test: /\.js/,
+    use: {
+      loader: "eslint-loader",
+      options: {
+        enforce: 'pre'
+      },
+    },
+    include: getPath('src')
+  }
+}
+
 module.exports = {
   context: getPath('/'),
-  entry: getPath('src/index.js'),
+  entry: {
+    index: getPath('src/index.js'),
+    other: getPath('src/other.js')
+  },
   output: {
-    filename: "[name].js",
+    filename: "bundle.[hash:8].js",
     path: config.prod.assetRoot,
     // publicPath:
   },
@@ -169,42 +186,51 @@ module.exports = {
   },
   module: {
     rules: [
+      // ...(config.dev.useEslint ? [createEslintRule()]: []),
+      config.dev.useEslint ? createEslintRule(): '',
       {
         test: /\.js$/,
         use: ['babel-loader'],
         include: getPath('src')
       },
-      {
-        test: /\.css$/,
-        use: [CssExtractPlugin.loader, 'css-loader', 'postcss-loader']
-      },
-      {
-        test: /\.less/,
-        use: [CssExtractPlugin.loader, 'css-loader', 'less-loader', 'postcss-loader']
-      },
-      {
-        test: /\.scss$/,
-        use: [CssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader']
-      },
+      // {
+      //   test: /\.css$/,
+      //   // use: [CssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+      //   use: ['style-loader', 'css-loader', 'postcss-loader']
+      // },
+      // {
+      //   test: /\.less/,
+      //   // use: [CssExtractPlugin.loader, 'css-loader', 'less-loader', 'postcss-loader']
+      //   use: ['style-loader', 'css-loader', 'postcss-loader']
+      // },
+      // {
+      //   test: /\.scss$/,
+      //   // use: [CssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader']
+      //   use: ['style-loader', 'css-loader', 'postcss-loader']
+      // },
       {
         test: /\.(jpg|jpeg|png)$/,
         use: {
           loader: "url-loader",
           options: {
             limit: 10000,
-            name: '[name].[ext]'
+            name: 'imgs/[name].[hash:8].[ext]'
           }
         }
       },
       {
-        test:/\.html$/,
+        test:/\.(html|htm)$/,
         use: 'html-withimg-loader'
+      },
+      {
+        test: /\.(eot|ttf|woff|svg)$/,
+        use: 'file-loader'
       }
     ]
-  },
-  plugins: [
-    new CssExtractPlugin({
-      filename: 'main.css'
-    })
-  ]
+  }
+  // plugins: [
+  //   new CssExtractPlugin({
+  //     filename: 'main.css'
+  //   })
+  // ]
 }

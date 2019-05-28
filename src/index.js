@@ -27,8 +27,8 @@ import cal from './caluate'
 // // const cal = require('./caluate')
 // // console.log('webpack........................')
 //
-// import $ from 'jquery'
-// console.log($)
+import $ from 'jquery'
+console.log($)
 // console.log(window.$) // undefined
 //
 let fn = () => {
@@ -48,9 +48,10 @@ console.log(cal.sumtest(1, 2))
 //
 //
 if (module.hot) {
-  module.hot.accept('./classA', () => {
-    // console.log('hot.............')
-    let str = require('./classA')
-    console.log(str)
-  })
+  module.hot.accept()
+  // module.hot.accept('./classA', () => {
+  //   // console.log('hot.............')
+  //   let str = require('./classA')
+  //   console.log(str)
+  // })
 }

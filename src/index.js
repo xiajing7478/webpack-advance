@@ -10,7 +10,7 @@ import './classB.js'
 import './includeDemo.js'
 import './decoratorDemo.js'
 import '@/alias/alias'
-import './env.js'
+// import './env.js'
 import './time.js'
 import './react.js'
 import './dynamicImport/btn.js'
@@ -28,7 +28,7 @@ import cal from './caluate'
 // // console.log('webpack........................')
 //
 // import $ from 'jquery'
-console.log($)
+// console.log($)
 // console.log(window.$) // undefined
 //
 let fn = () => {
@@ -38,15 +38,15 @@ let fn = () => {
 fn()
 
 console.log(cal.sumtest(1, 2))
-
-// scope hosting 作用域提升
-let a = 1
-let aa = 2
-let aaa = 3
-let aaaa = a + aa + aaa // 在webpack中自动省略，可以简化代码
-console.log(aaaa, '----------------------')
-
-
+//
+// // scope hosting 作用域提升
+// let a = 1
+// let aa = 2
+// let aaa = 3
+// let aaaa = a + aa + aaa // 在webpack中自动省略，可以简化代码
+// console.log(aaaa, '----------------------')
+//
+//
 if (module.hot) {
   module.hot.accept('./classA', () => {
     // console.log('hot.............')

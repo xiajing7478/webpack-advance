@@ -21,7 +21,7 @@ module.exports = (merge(base, {
     rules: utils.styleLoaders({ sourceMap: config.prod.productionSourceMap,
       extract: true, usePostCSS: true })
   },
-  // devtool: config.prod.devtool,
+  devtool: config.prod.devtool,
   output: {
     path: config.prod.assetRoot,
     filename: 'js/[name].[hash:8].js'

@@ -141,7 +141,7 @@
 // }
 
 const path = require('path')
-// const webpack = require('webpack')
+const webpack = require('webpack')
 const getPath = (dir) => path.join(__dirname, '..', dir)
 // const CleanWebpackPlugin = require('clean-webpack-plugin') // 清除目录
 // const HtmlWebpackPlugin = require('html-webpack-plugin') // html模板
@@ -170,8 +170,7 @@ const createEslintRule = () => {
 module.exports = {
   context: getPath('/'),
   entry: {
-    index: getPath('src/index.js'),
-    other: getPath('src/other.js')
+    index: getPath('src/index.js')
   },
   output: {
     filename: "bundle.[hash:8].js",
@@ -227,10 +226,10 @@ module.exports = {
         use: 'file-loader'
       }
     ]
-  }
-  // plugins: [
-  //   new CssExtractPlugin({
-  //     filename: 'main.css'
-  //   })
-  // ]
+  },
+  plugins: [
+    new webpack.ProvidePlugin ({ // 内置插件，在每个模块中都注入$
+      $: 'jquery' // jquery 是对应模块，从nodde_module查找
+    })
+  ]
 }

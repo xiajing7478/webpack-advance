@@ -27,7 +27,7 @@ import cal from './caluate'
 // // const cal = require('./caluate')
 // // console.log('webpack........................')
 //
-import $ from 'jquery'
+// import $ from 'jquery'
 console.log($)
 // console.log(window.$) // undefined
 //

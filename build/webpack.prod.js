@@ -12,9 +12,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CssExtractPlugin = require('mini-css-extract-plugin') // css提取
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const getPath = (dir) => path.join(__dirname, '..', dir)
+const env = process.env.NODE_ENV
 module.exports = (merge(base, {
-  mode: 'development',
+  mode: env === 'production' ? 'production': 'development',
   module: {
     rules: utils.styleLoaders({ sourceMap: config.prod.productionSourceMap,
       extract: true, usePostCSS: true })
@@ -23,6 +25,9 @@ module.exports = (merge(base, {
   output: {
     path: config.prod.assetRoot,
     filename: 'js/[name].[hash:8].js'
+  },
+  externals: {
+    jquery: '$'
   },
   optimization: {
     splitChunks: {
@@ -42,13 +47,20 @@ module.exports = (merge(base, {
     }
   },
   plugins:[
+    new OptimizeCSSAssetsPlugin(),
     new CssExtractPlugin({
-      filename: 'css/[name].[hash:8].css'
+      filename: 'css/[name].[hash:8].css',
+      chunkFilename: 'css/[id].[hash:8].css'
     }),
     new HtmlWebpackPlugin({
       template: getPath('index.html'),
       filename: 'index.html',
-      inject: true
+      inject: true,
+      favicon: getPath('favicon.ico'),
+      minify: {
+        removeAttributeQuotes: true, // 是否去除引号
+        collapseWhitespace: true // 是否去掉空行
+      }
     }),
     new CopyWebpackPlugin(
       [

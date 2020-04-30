@@ -49,7 +49,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/runtime": "^7.4.5",
     "happypack": "^5.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
